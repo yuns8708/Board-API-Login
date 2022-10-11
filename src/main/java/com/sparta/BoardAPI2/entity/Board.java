@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter
 @Getter // get 함수를 일괄적으로 만들어줍니다.
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
-@Entity(name = "users") // DB 테이블 역할을 합니다.
+@Entity // DB 테이블 역할을 합니다.
 public class Board extends Timestamped {
     // 글 고유 아이디
     @GeneratedValue(strategy = GenerationType.AUTO)
