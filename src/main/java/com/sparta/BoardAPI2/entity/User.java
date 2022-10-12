@@ -14,7 +14,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class User {
     @Id
-    @Column(name = "user_id")
+//    @Column(name = "user_id")
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
