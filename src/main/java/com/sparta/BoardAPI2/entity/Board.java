@@ -1,5 +1,6 @@
 package com.sparta.BoardAPI2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.BoardAPI2.dto.BoardRequestDto;
 import com.sparta.BoardAPI2.security.UserDetailsImpl;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter // get 함수를 일괄적으로 만들어줍니다.
@@ -16,6 +19,7 @@ public class Board extends Timestamped {
     // 글 고유 아이디
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @Column(name = "boardId")
     private Long id;
 
     // 글 제목
@@ -38,6 +42,10 @@ public class Board extends Timestamped {
     @JoinColumn(name = "userId")
     private User user;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "board")
+    List<Comment> comments = new ArrayList<>();
+
 
     // requestDto 정보를 가져와서 entity 만들 때 사용
 //    public Board(BoardRequestDto requestDto) {
@@ -59,6 +67,7 @@ public class Board extends Timestamped {
 //        this.content = requestDto.getContent();
 //        this.password = requestDto.getPassword();
 //    }
+
 // requestDto 정보를 가져와서 entity 만들 때 사용
 public Board(BoardRequestDto requestDto) {
     this.title = requestDto.getTitle();
@@ -66,7 +75,8 @@ public Board(BoardRequestDto requestDto) {
     this.password = requestDto.getPassword();
 }
 
-//    public Board(BoardRequestDto requestDto, User user) {
+    // 생성 (user매핑)
+//    public Board( User user, BoardRequestDto requestDto) {
 //        this.title = requestDto.getTitle();
 //        this.content = requestDto.getContent();
 //        this.password = requestDto.getPassword();

@@ -23,8 +23,9 @@ public class BoardController {
 //    @PostMapping("/boards")
 //    public BoardResponseDto createBoard(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody BoardRequestDto requestDto){
 //
-//        return boardService.createBoard(userDetails, requestDto);
+//        return boardService.createBoard(userDetails.getUser(), requestDto);
 //    }
+
     // 글 등록
     @PostMapping("/boards")
     public BoardResponseDto createBoard(@RequestBody BoardRequestDto requestDto){
@@ -47,7 +48,7 @@ public class BoardController {
     // 글 수정
     @PutMapping("/boards/{id}")
     public Long updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto) {
-        return boardService.update(id,requestDto);
+        return boardService.updateBoard(id,requestDto);
     }
 
     // 글 삭제

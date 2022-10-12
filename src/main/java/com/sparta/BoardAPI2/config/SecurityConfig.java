@@ -35,7 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/boards-list").permitAll()
                 .antMatchers("/boards/{id}").permitAll()
-                .antMatchers("/boards").permitAll();
+                .antMatchers("/boards").permitAll()
+                .antMatchers("/boards").permitAll()
+                .antMatchers("/boards/{id}/comments-list").permitAll();
         http
                 // token을 사용하는 방식이기 때문에 csrf를 disable하게 설정
                 .csrf().disable()

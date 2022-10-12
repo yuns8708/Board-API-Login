@@ -22,7 +22,7 @@ public class BoardService {
     private final UserRepository userRepository;
 
 
-    // 글 생성
+    // 글 생성 (user 매핑)
 //    @Transactional
 //    public BoardResponseDto createBoard(User user, BoardRequestDto requestDto) {
 //        Board board = new Board(user, requestDto);
@@ -74,7 +74,7 @@ public BoardResponseDto createBoard(BoardRequestDto requestDto) {
 
     // 글 수정
     @Transactional
-    public Long update(Long id, BoardRequestDto requestDto) {
+    public Long updateBoard(Long id, BoardRequestDto requestDto) {
         Board board = boardRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
         );
