@@ -1,17 +1,17 @@
 package com.sparta.BoardAPI2.controller;
 
-import com.sparta.BoardAPI2.dto.LoginRequestDto;
-import com.sparta.BoardAPI2.dto.UserRequestDto;
+import com.sparta.BoardAPI2.dto.*;
 import com.sparta.BoardAPI2.entity.User;
 import com.sparta.BoardAPI2.jwt.JwtTokenProvider;
 import com.sparta.BoardAPI2.repository.UserRepository;
+import com.sparta.BoardAPI2.security.UserDetailsImpl;
 import com.sparta.BoardAPI2.service.UserService;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @RestController
@@ -33,9 +33,31 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/signup")
-    public UserRequestDto register (@RequestBody UserRequestDto requestDto) {
-        userService.register(requestDto);
-        return requestDto;
+    public UserResponseDto register (@RequestBody UserRequestDto requestDto) {
+        return userService.register(requestDto);
+//        return requestDto;
+    }
+
+//    @GetMapping("/api/userinfo")
+//    @ResponseBody
+//    public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
+//        if(userDetails!=null){
+//            String username = userDetails.getUser().getUsername();
+//            System.out.println("로그인 된 상태입니다.");
+//            return new UserInfoDto(username);
+//        }
+//        return new UserInfoDto();
+//    }
+
+    @GetMapping("/api/userinfo")
+    @ResponseBody
+    public String getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        if(userDetails!=null){
+//            String username = userDetails.getUser().getUsername();
+            System.out.println("로그인 된 상태입니다.");
+            return userDetails.getUser().getUsername();
+        }
+        return "확인 불가";
     }
 
     // 로그인
@@ -69,5 +91,11 @@ public class UserController {
         }
         return jwtTokenProvider.createToken(member.getUsername());
     }
+
+    // 로그인
+//    @PostMapping("/login")
+//    public TokenResponse login(@RequestBody UserRequestDto userRequestDto, HttpServletResponse response) throws Exception {
+//        return userService.doLogin(userRequestDto,response);
+//    }
 
 }

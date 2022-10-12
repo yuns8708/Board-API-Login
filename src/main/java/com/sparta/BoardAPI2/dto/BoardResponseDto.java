@@ -18,8 +18,11 @@ public class BoardResponseDto {
 
     private LocalDateTime modifiedAt;
 
+    private String username;
+
     // board의 정보를 받아 boardResponseDto 생성
     public BoardResponseDto(Board board) {
+//        this.username = board.getUsername();
         this.title = board.getTitle();
         this.content = board.getContent();
         this.createdAt = board.getModifiedAt();

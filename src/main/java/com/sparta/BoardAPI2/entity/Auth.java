@@ -31,4 +31,5 @@ public class Auth {
     public void refreshUpdate(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.sparta.BoardAPI2.entity;
 
 import com.sparta.BoardAPI2.dto.BoardRequestDto;
+import com.sparta.BoardAPI2.security.UserDetailsImpl;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,12 +30,48 @@ public class Board extends Timestamped {
     @Column(nullable = false)
     private String password;
 
+    // 작성자
+//    @Column(nullable = false)
+//    private String username;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+
     // requestDto 정보를 가져와서 entity 만들 때 사용
-    public Board(BoardRequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.content = requestDto.getContent();
-        this.password = requestDto.getPassword();
-    }
+//    public Board(BoardRequestDto requestDto) {
+//        this.title = requestDto.getTitle();
+//        this.content = requestDto.getContent();
+//        this.password = requestDto.getPassword();
+//    }
+//
+//    public Board(User user, BoardRequestDto requestDto) {
+//        this.user = user;
+//        this.title = requestDto.getTitle();
+//        this.content = requestDto.getContent();
+//        this.password = requestDto.getPassword();
+//    }
+
+//    public Board(UserDetailsImpl userDetails, BoardRequestDto requestDto) {
+//        this.username = userDetails.getUsername();
+//        this.title = requestDto.getTitle();
+//        this.content = requestDto.getContent();
+//        this.password = requestDto.getPassword();
+//    }
+// requestDto 정보를 가져와서 entity 만들 때 사용
+public Board(BoardRequestDto requestDto) {
+    this.title = requestDto.getTitle();
+    this.content = requestDto.getContent();
+    this.password = requestDto.getPassword();
+}
+
+//    public Board(BoardRequestDto requestDto, User user) {
+//        this.title = requestDto.getTitle();
+//        this.content = requestDto.getContent();
+//        this.password = requestDto.getPassword();
+//        this.user = user;
+//    }
 
     // 업데이트 메소드
     public void update(BoardRequestDto requestDto) {
@@ -42,5 +79,4 @@ public class Board extends Timestamped {
         this.content = requestDto.getContent();
         this.password = requestDto.getPassword();
     }
-
 }

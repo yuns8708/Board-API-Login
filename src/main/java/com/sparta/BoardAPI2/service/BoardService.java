@@ -4,8 +4,12 @@ import com.sparta.BoardAPI2.dto.BoardListResponseDto;
 import com.sparta.BoardAPI2.dto.BoardRequestDto;
 import com.sparta.BoardAPI2.dto.BoardResponseDto;
 import com.sparta.BoardAPI2.entity.Board;
+import com.sparta.BoardAPI2.entity.User;
 import com.sparta.BoardAPI2.repository.BoardRepository;
+import com.sparta.BoardAPI2.repository.UserRepository;
+import com.sparta.BoardAPI2.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,14 +19,28 @@ import java.util.List;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
+
 
     // 글 생성
-    @Transactional
-    public BoardResponseDto createBoard(BoardRequestDto requestDto) {
-        Board board = new Board(requestDto);
-        boardRepository.save(board);
-        return new BoardResponseDto(board);
-    }
+//    @Transactional
+//    public BoardResponseDto createBoard(User user, BoardRequestDto requestDto) {
+//        Board board = new Board(user, requestDto);
+//        boardRepository.save(board);
+//        return new BoardResponseDto(board);
+//    }
+
+//    public BoardResponseDto createBoard(@AuthenticationPrincipal UserDetailsImpl userDetails, BoardRequestDto requestDto) {
+//        Board board = new Board(userDetails, requestDto);
+//        boardRepository.save(board);
+//        return new BoardResponseDto(board);
+//    }
+// 글 생성
+public BoardResponseDto createBoard(BoardRequestDto requestDto) {
+    Board board = new Board(requestDto);
+    boardRepository.save(board);
+    return new BoardResponseDto(board);
+}
 
     // 모든 글 가져오기
 //    public List<BoardResponseDto> findAllBoard() {
@@ -42,13 +60,11 @@ public class BoardService {
 //        }
 //    }
 
-    @Transactional
     public List<BoardListResponseDto> findAllBoard() {
         return boardRepository.findAllByOrderByModifiedAtDesc();
     }
 
     // 글 하나 가져오기
-    @Transactional
     public BoardResponseDto findOneBoard(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("조회 실패")
@@ -74,7 +90,6 @@ public class BoardService {
     }
 
     // 비밀번호 일치 확인
-    @Transactional
     public boolean checkPassword(Long id, String inputPassword) {
         Board board = boardRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")

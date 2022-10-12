@@ -3,7 +3,10 @@ package com.sparta.BoardAPI2.controller;
 import com.sparta.BoardAPI2.dto.BoardListResponseDto;
 import com.sparta.BoardAPI2.dto.BoardRequestDto;
 import com.sparta.BoardAPI2.dto.BoardResponseDto;
+import com.sparta.BoardAPI2.entity.Board;
+import com.sparta.BoardAPI2.security.UserDetailsImpl;
 import com.sparta.BoardAPI2.service.BoardService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +20,12 @@ public class BoardController {
     }
 
     // 글 등록
+//    @PostMapping("/boards")
+//    public BoardResponseDto createBoard(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody BoardRequestDto requestDto){
+//
+//        return boardService.createBoard(userDetails, requestDto);
+//    }
+    // 글 등록
     @PostMapping("/boards")
     public BoardResponseDto createBoard(@RequestBody BoardRequestDto requestDto){
         BoardResponseDto board = boardService.createBoard(requestDto);
@@ -24,7 +33,7 @@ public class BoardController {
     }
 
     // 전체 목록 조회
-    @GetMapping("/boards")
+    @GetMapping("/boards-list")
     public List<BoardListResponseDto> getAllBoards() {
         return boardService.findAllBoard();
     }
