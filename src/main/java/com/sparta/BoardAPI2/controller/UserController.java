@@ -53,7 +53,6 @@ public class UserController {
     @ResponseBody
     public String getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
         if(userDetails!=null){
-//            String username = userDetails.getUser().getUsername();
             System.out.println("로그인 된 상태입니다.");
             return userDetails.getUser().getUsername();
         }
