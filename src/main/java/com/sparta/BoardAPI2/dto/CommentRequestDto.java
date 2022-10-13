@@ -1,6 +1,5 @@
 package com.sparta.BoardAPI2.dto;
 
-import com.sparta.BoardAPI2.entity.Comment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,8 +11,5 @@ public class CommentRequestDto {
 
     private Long boardId;
 
-    public CommentRequestDto(Comment comment) {
-        this.content = comment.getContent();
-        this.boardId = comment.getBoard().getId();
-    }
+    private String username;
 }

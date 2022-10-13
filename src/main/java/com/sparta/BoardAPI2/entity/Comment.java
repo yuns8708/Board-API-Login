@@ -12,10 +12,8 @@ import javax.persistence.*;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "commentId")
     private Long id;
-
-//    @Column(nullable = false)
-//    private Long boardId;
 
     @Column(nullable = false)
     private String content;
@@ -24,10 +22,14 @@ public class Comment {
     @JoinColumn(name = "boardId")
     private Board board;
 
-    public Comment(CommentRequestDto requestDto, Board board) {
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+    public Comment(CommentRequestDto requestDto, Board board, User user) {
         this.content = requestDto.getContent();
-//        this.boardId = requestDto.getBoardId();
         this.board = board;
+        this.user = user;
     }
 
     public void update(CommentRequestDto requestDto) {

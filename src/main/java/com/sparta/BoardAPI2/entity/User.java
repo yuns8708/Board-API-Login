@@ -17,8 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
     @Id
-//    @Column(name = "user_id")
-    @Column
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 

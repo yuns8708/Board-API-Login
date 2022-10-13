@@ -7,8 +7,10 @@ import com.sparta.BoardAPI2.entity.Board;
 import com.sparta.BoardAPI2.entity.Comment;
 import com.sparta.BoardAPI2.repository.BoardRepository;
 import com.sparta.BoardAPI2.repository.CommentRepository;
+import com.sparta.BoardAPI2.security.UserDetailsImpl;
 import com.sparta.BoardAPI2.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -23,8 +25,8 @@ public class CommentController {
 
     // 댓글 등록
     @PostMapping("/boards/{id}/comments")
-    public CommentResponseDto createComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long id) {
-        return commentService.createComment(requestDto, id);
+    public CommentResponseDto createComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody CommentRequestDto requestDto, @PathVariable Long id) {
+        return commentService.createComment(requestDto, id, userDetails.getUser());
     }
 
     // 댓글 목록 조회
@@ -35,13 +37,13 @@ public class CommentController {
 
     // 댓글 수정
     @PutMapping("/boards/{boardId}/comments/{commentId}")
-    public Long updateComment(@PathVariable Long boardId, @PathVariable Long commentId, @RequestBody CommentRequestDto requestDto) {
-        return commentService.updateComment(boardId, commentId, requestDto);
+    public Long updateComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long boardId, @PathVariable Long commentId, @RequestBody CommentRequestDto requestDto) {
+        return commentService.updateComment(userDetails.getUser(), boardId, commentId, requestDto);
     }
 
     // 댓글 삭제
     @DeleteMapping("/boards/{boardId}/comments/{commentId}")
-    public Long deleteComment(@PathVariable Long commentId) {
-        return commentService.deleteComment(commentId);
+    public Long deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long commentId) {
+        return commentService.deleteComment(userDetails.getUser(), commentId);
     }
 }
