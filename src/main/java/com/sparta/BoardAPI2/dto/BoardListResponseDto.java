@@ -1,14 +1,11 @@
 package com.sparta.BoardAPI2.dto;
 
 import com.sparta.BoardAPI2.entity.Board;
-import com.sparta.BoardAPI2.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -24,7 +21,6 @@ public class BoardListResponseDto {
     private LocalDateTime modifiedAt;
 
     // Entity -> dto
-
     public BoardListResponseDto(Board board) {
         this.username = board.getUser().getUsername();
         this.title = board.getTitle();

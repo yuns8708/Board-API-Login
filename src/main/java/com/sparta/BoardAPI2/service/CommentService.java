@@ -33,7 +33,7 @@ public class CommentService {
     public CommentResponseDto createComment(CommentRequestDto requestDto, Long id) {
         Board board = boardRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("조회 실패"));
-        Comment comment = new Comment(requestDto,board);
+        Comment comment = new Comment(requestDto, board);
         commentRepository.save(comment);
         CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
         return commentResponseDto;

@@ -42,7 +42,6 @@ public class Board extends Timestamped {
     @OneToMany(mappedBy = "board")
     List<Comment> comments = new ArrayList<>();
 
-
     // requestDto 정보를 가져와서 entity 만들 때 사용 (user매핑)
     public Board(User user, BoardRequestDto requestDto) {
         this.title = requestDto.getTitle();
